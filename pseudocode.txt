@@ -1,0 +1,76 @@
+defun sudoku-solver(matrix)
+{
+    int row, col;
+ 
+    // If there is no unassigned location (base case)
+    if (!findEmpty(matrix row col))
+       return true; // success!
+ 
+    // consider numbers 1 to 4
+    for (int num = 1; num <= 4; num++)
+    {
+        // one possible solution
+        if (posSol(matrix, row, col, num))
+        {
+            // make tentative assignment
+            matrix[row][col] = num;
+ 
+            // return, if success, yay!
+            if (sudoku-solver(grid))
+                return true;
+ 
+            // failure, unmake & try again
+            matrix[row][col] = 0;
+        }
+    }
+    return false; // back up one
+}
+
+defun findEmpty(matrix row col)
+{
+    if (matrix[row][col] == 0)
+        return true;
+
+    else{
+
+        if((row+1) < 4) return findEmpty(matrix (row+1) col);
+
+        elseif((col+1) < 4) return findEmpty(matrix row (col+1));
+
+        else return false;
+    }
+
+}
+
+defun rowCheck(matrix row num)
+{
+    for (int col = 0; col < 4; col++)
+        if (matrix[row][col] == num)
+            return true;
+    return false;
+}
+
+defun colCheck(matrix col num)
+{
+    for (int row = 0; row < 4; row++)
+        if (matrix[row][col] == num)
+            return true;
+    return false;
+}
+
+defun boxCheck(matrix boxStartRow boxStartCol num)
+{
+    for (int row = 0; row < 2; row++)
+        for (int col = 0; col < 2; col++)
+            if (grid[row+boxStartRow][col+boxStartCol] == num)
+                return true;
+    return false;
+}
+
+defun posSol(matrix row col num)
+{
+    if (!rowCheck(matrix row num)) return;
+    if (!colCheck(matrix col num)) return;
+    if (!boxCheck(matrix row - row%2 col - col%2 num)) return;
+}
+ 

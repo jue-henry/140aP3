@@ -3,10 +3,6 @@
 		(cons t (cons matrix'()))
 		(cons nil (cons matrix'()))
 	)
-	;;(append original (cons matrix '()))
-	;;(if (solver matrix 1)
-		;;(print matrix)
-		;;(print original))
 ) ;;; main function
 
 (defun solver(matrix num)

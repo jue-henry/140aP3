@@ -3,6 +3,7 @@
 		(cons t (cons matrix'()))
 		(cons nil (cons matrix'()))
 	)
+
 ) ;;; main function
 
 (defun solver(matrix num)
@@ -13,15 +14,18 @@
 			(if (posSol matrix (car (cdr (findEmpty matrix 0))) (car (cdr (cdr (findEmpty matrix 0)))) num)
 				(progn 
 					(setf (nth (car (cdr (cdr (findEmpty matrix 0)))) (nth (car (cdr (findEmpty matrix 0))) matrix)) num)
-					(if (solver matrix num)
-						t ;;; the answer was correct
-						(setf (nth (car (cdr (cdr (findEmpty matrix 0)))) (nth (car (cdr (findEmpty matrix 0))) matrix)) 0)
+					(cond 
+						((solver matrix num) 
+						(and t
+							(solver matrix 1))) ;;; the answer was correct
+						(t (setf (nth (car (cdr (cdr (findEmpty matrix 0)))) (nth (car (cdr (findEmpty matrix 0))) matrix)) 0))
 					)
 				) 
 				(solver matrix (+ 1 num)) ;;; check out next number
 			)
 		) 
 	)
+
 ) ;;; solver
 
 (defun findEmpty(matrix index)

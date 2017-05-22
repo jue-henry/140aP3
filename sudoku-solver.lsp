@@ -1,22 +1,25 @@
 (defun sudoku-solver(matrix)
 	(solver matrix 1)
-)
+) ;;; main function
 
 (defun solver(matrix num)
     (if (not (car (findEmpty matrix 0 0)))
 		(print matrix)
-		(if (< (+ 1 num) 5)
-			nil
+		(if (> (+ 1 num) 4)
+			nil ;;; backtrack
 			(if (posSol matrix (car (cdr (findEmpty matrix 0 0))) (cdr (cdr (findEmpty matrix 0 0))))
-				(progn ()
-			); else
+				(progn 
+					(rewrite matrix (car (cdr (findEmpty matrix 0 0))) (cdr (cdr (findEmpty matrix 0 0))) num)
+					(if (solver matrix num)
+						t ;;; the answer was correct
+					)
+					(rewrite matrix (car (cdr (findEmpty matrix 0 0))) (cdr (cdr (findEmpty matrix 0 0))) 0)
+				) 
+				(solver matrix (+ 1 num)) ;;; check out next number
+			)
+		) 
 	)
-	
-	
-	
-	
-
-)
+) ;;; solver
 
 (defun findEmpty(matrix row col)
 	(if (equal 0 (nth col(nth row matrix)))
@@ -68,4 +71,5 @@
 	)
 )
 
-(defun rep
+(defun rewrite()
+)
